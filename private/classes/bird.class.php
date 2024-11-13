@@ -4,7 +4,7 @@ class Bird extends DatabaseObject
 {
 
   static protected $table_name = 'birds';
-  static protected $db_columns = ['id', 'common_name', 'habitat', 'food', 'conservation_id', 'backyard_tips'];
+  static protected $columns = ['id', 'common_name', 'habitat', 'food', 'conservation_id', 'backyard_tips'];
 
   public $id;
   public $common_name;
@@ -26,11 +26,10 @@ class Bird extends DatabaseObject
     $this->common_name = $args['common_name'] ?? '';
     $this->habitat = $args['habitat'] ?? '';
     $this->food = $args['food'] ?? '';
-    $this->behavior = $args['behavior'] ?? '';
+    //$this->behavior = $args['behavior'] ?? '';
     $this->conservation_id = $args['conservation_id'] ?? '';
     $this->backyard_tips = $args['backyard_tips'] ?? '';
   }
-
 
   public function conservation()
   {
@@ -39,17 +38,5 @@ class Bird extends DatabaseObject
     } else {
       return "Unknown";
     }
-  }
-
-
-  protected function validate()
-  {
-    $this->errors = [];
-
-    if (is_blank($this->common_name)) {
-      $this->errors[] = "Bird name cannot be blank.";
-    }
-
-    return $this->errors;
   }
 }
