@@ -5,6 +5,7 @@ class Bird extends DatabaseObject
 
   static protected $table_name = 'birds';
   static protected $db_columns = ['id', 'common_name', 'habitat', 'food', 'conservation_id', 'backyard_tips'];
+  public $errors = [];
 
   public $id;
   public $common_name;
@@ -47,13 +48,21 @@ class Bird extends DatabaseObject
     }
   }
 
-
   protected function validate()
   {
     $this->errors = [];
 
     if (is_blank($this->common_name)) {
-      $this->errors[] = "Bird name cannot be blank.";
+      $this->errors[] = "Name cannot be blank.";
+    }
+    if (is_blank($this->habitat)) {
+      $this->errors[] = "Habitat cannot be blank.";
+    }
+    if (is_blank($this->food)) {
+      $this->errors[] = "Food cannot be blank.";
+    }
+    if (is_blank($this->conservation_id)) {
+      $this->errors[] = "Conservation ID cannot be blank.";
     }
 
     return $this->errors;

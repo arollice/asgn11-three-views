@@ -29,6 +29,8 @@ if (is_post_request()) {
 <div class="bird-create">
   <h1>Create Bird</h1>
 
+  <?php echo display_errors($bird->errors); ?>
+
   <form action="<?php echo url_for('new.php'); ?>" method="post">
     <?php include('form_fields.php'); ?>
     <div>
