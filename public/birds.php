@@ -7,9 +7,8 @@ include(SHARED_PATH . '/public_header.php');
 <h2>Bird inventory</h2>
 <p>This is a short list -- start your birding!</p>
 
-<!-- create a link to add a bird -->
-<p><a href="new.php">Add a New Bird</a></p>
-
+<!--Create a link to Add a Bird-->
+<a href='new.php'>Add a new bird</a>
 
 <table border="1">
   <tr>

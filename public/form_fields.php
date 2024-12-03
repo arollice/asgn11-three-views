@@ -1,38 +1,43 @@
 <?php
-/* 
-  Use the bicycles/staff/form_fields.php file as a guide 
-  so your file mimics the same functionality.
- 
-*/
-require_once('../private/initialize.php');
-$page_title = 'Add New Bird';
-include(SHARED_PATH . '/public_header.php');
+if (!isset($bird)) {
+  redirect_to(url_for('index.php'));
+}
 ?>
 
-<h2>Create a New Bird</h2>
+<dl>
+  <dt>Common Name: </dt>
+  <dd><input type="text" name="bird[common_name]" value="<?php echo h($bird->common_name); ?>"></dd>
+</dl>
 
-<form action="new.php" method="POST">
-  <label for="common_name">Common Name:</label>
-  <input type="text" name="common_name" id="common_name" required><br>
+<dl>
+  <dt>Habitat: </dt>
+  <dd><input type="text" name="bird[habitat]" value="<?php echo h($bird->habitat); ?>"></dd>
+</dl>
 
-  <label for="habitat">Habitat:</label>
-  <input type="text" name="habitat" id="habitat" required><br>
+<dl>
+  <dt>Food: </dt>
+  <dd><input type="text" name="bird[food]" value="<?php echo h($bird->food); ?>"></dd>
+</dl>
 
-  <label for="food">Food:</label>
-  <input type="text" name="food" id="food" required><br>
+<dl>
+  <dt>Conservation ID: </dt>
+  <dd>
+    <select name="bird[conservation_id]">
+      <option value=""></option>
+      <?php foreach (Bird::get_conservation_options() as $key => $option) { ?>
+        <option value="<?php echo $key; ?>" <?php if ($bird->conservation_id == $key) {
+                                              echo 'selected';
+                                            } ?>>
+          <?php echo $option; ?>
+        </option>
+      <?php } ?>
+    </select>
+  </dd>
+</dl>
 
-  <label for="conservation_id">Conservation Status:</label>
-  <select name="conservation_id" id="conservation_id">
-    <option value="1">Low concern</option>
-    <option value="2">Moderate concern</option>
-    <option value="3">Extreme concern</option>
-    <option value="4">Extinct</option>
-  </select><br>
-
-  <label for="backyard_tips">Backyard Tips:</label>
-  <textarea name="backyard_tips" id="backyard_tips"></textarea><br>
-
-  <button type="submit">Create Bird</button>
-</form>
-
-<?php include(SHARED_PATH . '/public_footer.php'); ?>
+<dl>
+  <dt>Backyard Tips: </dt>
+  <dd>
+    <textarea name="bird[backyard_tips]" rows="6" cols="50"><?php echo h($bird->backyard_tips); ?></textarea>
+  </dd>
+</dl>

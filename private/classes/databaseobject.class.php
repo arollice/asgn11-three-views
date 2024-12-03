@@ -2,9 +2,10 @@
 
 class DatabaseObject
 {
+
   static protected $database;
   static protected $table_name = "";
-  static protected $columns = [];
+  static protected $db_columns = [];
   public $errors = [];
   public $id;
 
@@ -64,14 +65,14 @@ class DatabaseObject
 
   protected function validate()
   {
-    $this->validate();
-    if (!empty($this->errors)) {
-      error_log("Validation errors: " . print_r($this->errors, true)); // Log validation errors
-      return false;
-    }
+    $this->errors = [];
+
+    // Add custom validations
+
+    return $this->errors;
   }
 
-  public function create()
+  protected function create()
   {
     $this->validate();
     if (!empty($this->errors)) {
@@ -79,17 +80,12 @@ class DatabaseObject
     }
 
     $attributes = $this->sanitized_attributes();
-
-    // Log sanitized attributes for debugging
-    error_log("Sanitized attributes: " . print_r($attributes, true));
-
     $sql = "INSERT INTO " . static::$table_name . " (";
     $sql .= join(', ', array_keys($attributes));
     $sql .= ") VALUES ('";
     $sql .= join("', '", array_values($attributes));
     $sql .= "')";
     $result = self::$database->query($sql);
-
     if ($result) {
       $this->id = self::$database->insert_id;
     }
@@ -140,7 +136,7 @@ class DatabaseObject
   public function attributes()
   {
     $attributes = [];
-    foreach (static::$columns as $column) {
+    foreach (static::$db_columns as $column) {
       if ($column == 'id') {
         continue;
       }

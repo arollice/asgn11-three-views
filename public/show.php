@@ -1,36 +1,43 @@
+<?php require_once('../private/initialize.php'); ?>
+
 <?php
-require_once('../../../private/initialize.php');
 
-// Ensure the ID is passed in the URL; default to 1 if not provided
-$id = $_GET['id'] ?? '1'; // Use a default value (e.g., 1) if no ID is given
+$id = $_GET['id'] ?? '1'; // PHP > 7.0
 
-// Debugging: Check if ID is correct
-echo "Requested ID: " . h($id) . "<br>";
-
-// Fetch the bird using the ID from the database
 $bird = Bird::find_by_id($id);
 
-// Check if a bird is found
-if (!$bird) {
-  echo "No bird found with ID: " . h($id) . "<br>";
-  redirect_to(url_for('/public/birds.php')); // Redirect to birds list page if bird not found
-}
-
-$page_title = 'Bird Details: ' . h($bird->common_name);
-include(SHARED_PATH . '/public_header.php');
 ?>
 
-<h2>Details for <?php echo h($bird->common_name); ?></h2>
+<?php $page_title = 'Show Bird: ' . h($bird->common_name); ?>
+<?php include(SHARED_PATH . '/public_header.php'); ?>
 
-<div>
-  <p><strong>Common Name:</strong> <?php echo h($bird->common_name); ?></p>
-  <p><strong>Habitat:</strong> <?php echo h($bird->habitat); ?></p>
-  <p><strong>Food:</strong> <?php echo h($bird->food); ?></p>
-  <p><strong>Conservation Status:</strong> <?php echo h($bird->conservation()); ?></p>
-  <p><strong>Backyard Tips:</strong> <?php echo h($bird->backyard_tips); ?></p>
+<div id="content">
+
+  <a class="back-link" href="<?php echo url_for('index.php'); ?>">&laquo; Back to List</a>
+
+  <div>
+
+    <h1>Bird: <?php echo h($bird->common_name); ?></h1>
+
+    <div class="attributes">
+      <dl>
+        <dt>Habitat</dt>
+        <dd><?php echo h($bird->habitat); ?></dd>
+      </dl>
+      <dl>
+        <dt>Food</dt>
+        <dd><?php echo h($bird->food); ?></dd>
+      </dl>
+      <dl>
+        <dt>Conservation Level</dt>
+        <dd><?php echo h($bird->conservation_id); ?></dd>
+      </dl>
+      <dl>
+        <dt>Backyard Tips</dt>
+        <dd><?php echo h($bird->backyard_tips); ?></dd>
+      </dl>
+    </div>
+
+  </div>
+
 </div>
-
-<p><a href="edit.php?id=<?php echo h($bird->id); ?>">Edit this Bird</a></p>
-<p><a href="delete.php?id=<?php echo h($bird->id); ?>">Delete this Bird</a></p>
-
-<?php include(SHARED_PATH . '/public_footer.php'); ?>
