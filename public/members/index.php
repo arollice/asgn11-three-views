@@ -7,11 +7,21 @@
 
 <div id="content">
   <div class="members_listing">
-    <h1>Users</h1>
+    <h1>Members/Users</h1>
+    <?php if ($session->is_logged_in()) { ?>
+      <p>User: <?php echo h($session->username); ?> - Logged In</p>
+    <?php } else { ?>
+      <p>You are not logged in. <a href="<?php echo url_for('members/login.php'); ?>">Log in here</a>.</p>
+    <?php } ?>
 
     <div class="actions">
-      <a class="action" href="<?php echo url_for('members/new.php'); ?>">Add User</a>
+      <?php if ($session->is_logged_in()) { ?>
+        <a class="action" href="<?php echo url_for('members/new.php'); ?>">Add User</a>
+      <?php } else { ?>
+        <p><small>(Log in to add user)</small></p>
+      <?php } ?>
     </div>
+
     <table class="list" border="1">
       <tr>
         <th>ID</th>
@@ -37,8 +47,20 @@
             <td><?php echo h($member->email); ?></td>
             <td><?php echo h($member->username); ?></td>
             <td><a href="<?php echo url_for('members/detail.php?id=' . h(u($member->id))); ?>">View</a></td>
-            <td><a href="<?php echo url_for('members/edit.php?id=' . h(u($member->id))); ?>">Edit</a></td>
-            <td><a href="<?php echo url_for('members/delete.php?id=' . h(u($member->id))); ?>">Delete</a></td>
+            <td>
+              <?php if ($session->is_logged_in()) { ?>
+                <a href="<?php echo url_for('members/edit.php?id=' . h(u($member->id))); ?>">Edit</a>
+              <?php } else { ?>
+                <span style="text-decoration: line-through; color: gray;">Edit</span>
+              <?php } ?>
+            </td>
+            <td>
+              <?php if ($session->is_logged_in()) { ?>
+                <a href="<?php echo url_for('members/delete.php?id=' . h(u($member->id))); ?>">Delete</a>
+              <?php } else { ?>
+                <span style="text-decoration: line-through; color: gray;">Delete</span>
+              <?php } ?>
+            </td>
           </tr>
         <?php } ?>
       <?php } ?>
@@ -50,6 +72,7 @@
   <li><a href="<?php echo url_for('birds.php'); ?>">View Our Inventory</a></li>
   <li><a href="<?php echo url_for('about.php'); ?>">About Us</a></li>
 </ul>
+
 
 
 <?php include(SHARED_PATH . '/public_footer.php'); ?>

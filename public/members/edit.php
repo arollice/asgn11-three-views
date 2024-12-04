@@ -18,7 +18,7 @@ if (is_post_request()) {
   $result = $member->save();
 
   if ($result === true) {
-    $_SESSION['message'] = 'This user was updated successfully.';
+    $session->message('This user was updated successfully.');
     redirect_to(url_for('members/show.php?id=' . $id));
   } else {
     //show errors

@@ -50,7 +50,9 @@ if (is_post_request()) {
     <input type="password" name="password" value="" /><br />
     <input type="submit" name="submit" value="Submit" />
   </form>
-
 </div>
+<p>
+  <a href="<?php echo url_for('/') ?>">Back to Menu</a>
+</p>
 
 <?php include(SHARED_PATH . '/public_footer.php'); ?>
