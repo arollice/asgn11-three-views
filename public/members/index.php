@@ -12,8 +12,13 @@
       <p>User: <?php echo h($session->username); ?></p>
     <?php } ?>
 
-    <div class="actions">
-      <a class="action" href="<?php echo url_for('members/new.php'); ?>">Add User</a>
+    <div>
+      <ul></ul>
+      <?php if (!$session->is_logged_in()) { ?>
+        <li><a href="<?php echo url_for('members/login.php'); ?>">Login</a></li>
+      <?php } ?>
+      <li><a href="<?php echo url_for('members/new.php'); ?>">Add User</a></li>
+      </ul>
     </div>
   </div>
 
