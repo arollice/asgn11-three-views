@@ -2,24 +2,24 @@
 
 <?php
 if (!isset($_GET['id'])) {
-  redirect_to(url_for('index.php'));
+  redirect_to(url_for('members/index.php'));
 }
 
 $id = $_GET['id'];
 
-$bird = Bird::find_by_id($id);
+$member = Member::find_by_id($id);
 
 if (is_post_request()) {
 
-  $args = $_POST['bird'];
+  $args = $_POST['member'];
 
 
-  $bird->merge_attributes($args);
-  $result = $bird->save();
+  $member->merge_attributes($args);
+  $result = $member->save();
 
   if ($result === true) {
-    $_SESSION['message'] = 'This bird was updated successfully.';
-    redirect_to(url_for('show.php?id=' . $id));
+    $_SESSION['message'] = 'This user was updated successfully.';
+    redirect_to(url_for('members/show.php?id=' . $id));
   } else {
     //show errors
 
@@ -30,20 +30,20 @@ if (is_post_request()) {
 }
 ?>
 
-<?php $page_title = 'Edit Bird'; ?>
+<?php $page_title = 'Edit User'; ?>
 
 <?php include(SHARED_PATH . '/public_header.php'); ?>
 
 <div class="content">
-  <h1>Edit Bird</h1>
+  <h1>Edit User</h1>
 
-  <?php echo display_errors($bird->errors); ?>
+  <?php echo display_errors($member->errors); ?>
 
-  <form action="<?php echo url_for('edit.php?id=' . h(u($id))); ?>" method="post">
+  <form action="<?php echo url_for('members/edit.php?id=' . h(u($id))); ?>" method="post">
 
     <?php include('form_fields.php'); ?>
     <div>
-      <input type="submit" value="Edit Bird">
+      <input type="submit" value="Edit User">
     </div>
   </form>
 

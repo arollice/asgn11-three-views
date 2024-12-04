@@ -76,6 +76,7 @@ class DatabaseObject
   {
     $this->validate();
     if (!empty($this->errors)) {
+      error_log(print_r($this->errors, true));
       return false;
     }
 

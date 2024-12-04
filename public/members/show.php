@@ -1,11 +1,19 @@
 <?php require_once('../../private/initialize.php'); ?>
 
 <?php
+// Validate and fetch member
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+  $_SESSION['message'] = 'Invalid user ID.';
+  redirect_to(url_for('members/index.php'));
+}
 
-$id = $_GET['id'] ?? '1'; // PHP > 7.0
-
+$id = $_GET['id'];
 $member = Member::find_by_id($id);
 
+if (!$member) {
+  $_SESSION['message'] = 'User not found.';
+  redirect_to(url_for('members/index.php'));
+}
 ?>
 
 <?php $page_title = 'Show User: ' . h($member->first_name); ?>
@@ -13,7 +21,7 @@ $member = Member::find_by_id($id);
 
 <div id="content">
 
-  <a class="back-link" href="<?php echo url_for('index.php'); ?>">&laquo; Back to List</a>
+  <a class="back-link" href="<?php echo url_for('members/index.php'); ?>">&laquo; Back to List</a>
 
   <div>
 

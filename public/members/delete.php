@@ -2,13 +2,13 @@
 
 <?php
 if (!isset($_GET['id'])) {
-  redirect_to(url_for('index.php'));
+  redirect_to(url_for('members/index.php'));
 }
 
 $id = $_GET['id'];
 $member = Member::find_by_id($id);
 if ($member == false) {
-  redirect_to(url_for('index.php'));
+  redirect_to(url_for('members/index.php'));
 }
 
 if (is_post_request()) {
@@ -16,7 +16,7 @@ if (is_post_request()) {
   $result = $member->delete();
 
   $_SESSION['message'] = 'This user was deleted successfully.';
-  redirect_to(url_for('birds.php'));
+  redirect_to(url_for('members/index.php'));
 } else {
   //Display form
 }
@@ -33,7 +33,7 @@ if (is_post_request()) {
   <p class='item'>Full name: <?php echo h($member->get_name()); ?></p>
   <p class='item'>Username: <?php echo h($member->username); ?></p>
 
-  <form action="<?php echo url_for('delete.php?id=' . h(u($id))); ?>" method="post">
+  <form action="<?php echo url_for('members/delete.php?id=' . h(u($id))); ?>" method="post">
 
     <div id='operations'>
       <input type="submit" name="commit" value="Delete Member">
