@@ -12,7 +12,7 @@
     <div class="actions">
       <a class="action" href="<?php echo url_for('members/new.php'); ?>">Add User</a>
     </div>
-    <table class="list">
+    <table class="list" border="1">
       <tr>
         <th>ID</th>
         <th>First Name</th>
