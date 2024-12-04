@@ -37,13 +37,23 @@ foreach (glob('classes/*.class.php') as $file) {
   require_once($file);
 }
 
-// Autoload class definitions
+
+//Auto loading classes
 function my_autoload($class)
 {
-  if (preg_match('/\A\w+\Z/', $class)) {
-    include('classes/' . $class . '.class.php');
+  // Convert class name to lowercase for the file search
+  // Adjust the path to reference the 'private/classes' folder
+  $filename = PRIVATE_PATH . '/classes/' . strtolower($class) . '.class.php';
+
+  // Check if the file exists and include it
+  if (file_exists($filename)) {
+    include($filename);
+  } else {
+    // You can optionally log this if you need to track missing files
+    // error_log("Class file for '$class' not found: $filename");
   }
 }
+
 spl_autoload_register('my_autoload');
 
 $database = db_connect();
