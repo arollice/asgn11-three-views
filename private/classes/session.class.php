@@ -32,6 +32,15 @@ class Session
     return isset($this->member_id);
   }
 
+  public function is_admin()
+  {
+    if ($this->is_logged_in()) {
+      $member = Member::find_by_id($this->member_id);
+      return $member && $member->user_level === 'a'; // Assuming 'a' represents admin
+    }
+    return false;
+  }
+
   public function log_out()
   {
     unset($_SESSION['member_id']);

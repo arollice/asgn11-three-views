@@ -19,7 +19,14 @@
     </h1>
     <?php if ($session->is_logged_in()) { ?>
       <ul>
-        <li><a href="<?php echo url_for('index.php'); ?>">Menu</a></li>
+        <?php if ($session->is_logged_in()) { ?>
+          <li>User: <?php echo h($session->username); ?></li>
+        <?php } ?>
+
+        <?php if ($session->is_logged_in() && $session->is_admin()) { ?>
+          <li><a href="<?php echo url_for('members/index.php'); ?>">View Members</a></li>
+        <?php } ?>
+
         <li><a href="<?php echo url_for('members/logout.php'); ?>">Logout</a></li>
       </ul>
     <?php } ?>

@@ -5,19 +5,19 @@
 
 <?php include(SHARED_PATH . '/public_header.php'); ?>
 
+
 <div id="content">
   <div class="members_listing">
-    <h1>Members/Users</h1>
     <?php if ($session->is_logged_in()) { ?>
       <p>User: <?php echo h($session->username); ?></p>
     <?php } ?>
-
+    <h1>Members/Users</h1>
     <div>
-      <ul></ul>
-      <?php if (!$session->is_logged_in()) { ?>
-        <li><a href="<?php echo url_for('members/login.php'); ?>">Login</a></li>
-      <?php } ?>
-      <li><a href="<?php echo url_for('members/new.php'); ?>">Add User</a></li>
+      <ul>
+        <?php if (!$session->is_logged_in()) { ?>
+          <li><a href="<?php echo url_for('members/login.php'); ?>">Login</a></li>
+        <?php } ?>
+        <li><a href="<?php echo url_for('members/new.php'); ?>">Add User</a></li>
       </ul>
     </div>
   </div>
@@ -58,13 +58,9 @@
       <?php } ?>
     <?php } ?>
   </table>
+  <a href="../birds.php">Back to Inventory</a>
 </div>
 </div>
-
-<ul>
-  <li><a href="<?php echo url_for('birds.php'); ?>">View Our Inventory</a></li>
-  <li><a href="<?php echo url_for('about.php'); ?>">About Us</a></li>
-</ul>
 
 
 

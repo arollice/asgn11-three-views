@@ -7,7 +7,8 @@
 
 <ul>
   <li><a href="<?php echo url_for('/birds.php'); ?>">View Our Inventory</a></li>
-  <li><a href="<?php echo url_for('/members/index.php'); ?>">Members</a></li>
+  <!-- ADD IN ADMIN VIEW <li><a href="<?php //echo url_for('/members/index.php'); 
+                                      ?>">View Members</a></li>-->
   <li><a href="<?php echo url_for('/about.php'); ?>">About Us</a></li>
 </ul>
 

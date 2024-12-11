@@ -4,11 +4,20 @@ $page_title = 'Bird List';
 include(SHARED_PATH . '/public_header.php');
 ?>
 
+
 <h2>Bird inventory</h2>
 <p>This is a short list -- start your birding!</p>
 
-<!--Create a link to Add a Bird-->
-<a href='new.php'>Add a new bird</a>
+<!-- Conditionally display the "Add a new bird" link -->
+<?php if ($session->is_logged_in()) { ?>
+  <a href='new.php'>Add a new bird</a>
+<?php } ?>
+
+
+<!-- Display "Login" and "Sign Up" links if not logged in -->
+<?php if (!$session->is_logged_in()) { ?>
+  <a href="members/login.php">Login</a> | <a href="members/signup.php">Sign Up</a>
+<?php } ?>
 
 <table border="1">
   <tr>
@@ -17,6 +26,8 @@ include(SHARED_PATH . '/public_header.php');
     <th>Food</th>
     <th>Conservation</th>
     <th>Backyard Tips</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
     <th>&nbsp;</th>
   </tr>
 
@@ -35,11 +46,16 @@ include(SHARED_PATH . '/public_header.php');
       <td><?php echo h($bird->food); ?></td>
       <td><?php echo h($bird->conservation()); ?></td>
       <td><?php echo h($bird->backyard_tips); ?></td>
-      <td><a href="detail.php?id=<?php echo $bird->id; ?>">View</a></td>
-      <td><a href="edit.php?id=<?php echo $bird->id; ?>">Edit</a></td>
-      <td><a href="<?php echo url_for('delete.php?id=' . h(u($bird->id))); ?>">Delete</a></td>
-
+      <td><a href="detail.php?id=<?php echo h($bird->id); ?>">View</a></td>
+      <?php if ($session->is_logged_in()) { ?>
+        <td><a href="edit.php?id=<?php echo h($bird->id); ?>">Edit</a></td>
+        <td><a href="<?php echo url_for('delete.php?id=' . h(u($bird->id))); ?>">Delete</a></td>
+      <?php } else { ?>
+        <td><span style="color: gray; text-decoration: none;">Edit</span></td>
+        <td><span style="color: gray; text-decoration: none;">Delete</span></td>
+      <?php } ?>
     </tr>
+
   <?php } ?>
 
 </table>
